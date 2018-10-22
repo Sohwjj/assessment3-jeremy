@@ -1,0 +1,65 @@
+<h1>Add Stall</h1>
+
+<form [formGroup]="createStallGroup" (ngSubmit)="processStall()">
+
+  <div>
+    <mat-form-field>
+      <input type="text" id="stall-name" placeholder="Stall name" formControlName="stallName" matInput>
+    </mat-form-field><br>       
+    <mat-form-field>
+      <input type="text" id="stall-location" placeholder="Stall location" formControlName="stallLocation" matInput>
+    </mat-form-field><br>
+    <mat-form-field>
+        <input type="text" id="stall-description" placeholder="Stall description" formControlName="stallDescription" matInput>
+      </mat-form-field>
+
+  </div>
+
+  
+
+
+  <button mat-raised-button color="primary" type="button" (click)="addFood()">
+    Add food
+  </button>
+
+  <div *ngIf="foodGroup.controls.length">
+    <h2>Menu</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Food Name</th>
+          <th>Calories</th>
+          <th>Food Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+
+      <tbody formArrayName="foods">
+        <tr *ngFor="let f of createStallGroup.controls['foods'].controls; let i = index" 
+          formGroupName="{{i}}">
+          <td>
+            <input type="text" formControlName="foodname" placeholder="Food Name">
+          </td>
+          <td>
+            <input type="text" formControlName="calories" placeholder="Calories">
+          </td>
+          <td>
+            <input type="text" formControlName="foodtype" placeholder="Food Type">
+          </td>
+          <td>
+            <input type="text" formControlName="fooddescription" placeholder="Food Description">
+          </td>
+          <td>
+            <button type="button" (click)=deleteFood(i)>&times;</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+  <button mat-raised-button color="primary" type="submit" [disabled]="createStallGroup.invalid">
+      Create Stall
+  </button>
+</form>
